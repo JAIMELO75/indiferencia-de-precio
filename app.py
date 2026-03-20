@@ -17,15 +17,15 @@ st.title("📊 Simulador de Punto de Indiferencia de Ventas")
 st.caption("Herramienta desarrollada por **Jaime Loaiza** para uso gerencial en ventas.")
 
 # 1. NOMBRE DEL PRODUCTO
-producto = st.text_input("Producto / Categoría a analizar:", value="Zapapicos")
+producto = st.text_input("Producto / Categoría a analizar:", value="un producto cualquiera")
 
 st.divider()
 
 # --- DATOS BASE (BARRA LATERAL) ---
 st.sidebar.header("📝 Datos Base (Actuales)")
-p_actual = st.sidebar.number_input("Precio de Venta Actual", value=162000.00, format="%.2f")
-q_actual = st.sidebar.number_input("Unidades Vendidas Actuales", value=69000)
-mb_actual_pct = st.sidebar.number_input("Margen Bruto Actual (%)", value=26.00, format="%.2f")
+p_actual = st.sidebar.number_input("Precio de Venta Actual", value=1, format="%.2f")
+q_actual = st.sidebar.number_input("Unidades Vendidas Actuales", value=100)
+mb_actual_pct = st.sidebar.number_input("Margen Bruto Actual (%)", value=35, format="%.2f")
 
 # Cálculos Base Internos
 costo_unitario = p_actual * (1 - (mb_actual_pct / 100))
