@@ -1,73 +1,93 @@
 import streamlit as st
 import pandas as pd
 
-# Configuración de página
+# Configuración de la página
 st.set_page_config(page_title="Simulador de Punto de Indiferencia", layout="wide")
 
-# 1. NOMBRE DEL PRODUCTO (Editable para múltiples ejercicios)
-st.title("📊 Simulador de Elasticidad")
-nombre_producto = st.text_input("Producto a analizar:", value="Zapapico")
+# Estilo para mejorar la visualización
+st.markdown("""
+    <style>
+    .footer { position: fixed; bottom: 0; width: 100%; text-align: center; color: gray; font-size: 12px; padding: 10px; }
+    .report-box { border: 1px solid #e6e9ef; padding: 20px; border-radius: 10px; background-color: #fafafa; }
+    </style>
+    """, unsafe_allow_html=True)
+
+# --- ENCABEZADO Y CRÉDITOS ---
+st.title("📊 Simulador de Punto de Indiferencia de Ventas")
+st.caption("Herramienta desarrollada por **Jaime Loaiza** para uso gerencial en ventas.")
+
+# 1. NOMBRE DEL PRODUCTO
+producto = st.text_input("Producto / Categoría a analizar:", value="Zapapicos")
 
 st.divider()
 
-# --- DATOS DE ORIGEN (Barra Lateral) ---
-st.sidebar.header("1. Datos Actuales (Base)")
+# --- DATOS BASE (BARRA LATERAL) ---
+st.sidebar.header("📝 Datos Base (Actuales)")
 p_actual = st.sidebar.number_input("Precio de Venta Actual", value=162000.00, format="%.2f")
-q_actual = st.sidebar.number_input("Cantidad Vendida Actual", value=69000)
+q_actual = st.sidebar.number_input("Unidades Vendidas Actuales", value=69000)
 mb_actual_pct = st.sidebar.number_input("Margen Bruto Actual (%)", value=26.00, format="%.2f")
 
 # Cálculos Base Internos
-mb_actual_decimal = mb_actual_pct / 100
-costo_unitario = p_actual * (1 - mb_actual_decimal)
-utilidad_bruta_objetivo = q_actual * (p_actual - costo_unitario)
+costo_unitario = p_actual * (1 - (mb_actual_pct / 100))
+ub_objetivo = q_actual * (p_actual - costo_unitario)
 
-# --- SIMULADOR AUTOMÁTICO ---
-st.subheader(f"2. Simulación de Escenario: {nombre_producto}")
+# --- SIMULACIÓN ---
+st.subheader(f"Simulación de Escenario: {producto}")
+col_input, col_res = st.columns([1, 2])
 
-# Entrada del nuevo precio
-nuevo_p = st.number_input("Introduce el Nuevo Precio de Venta:", value=p_actual - 4263.16, format="%.2f")
+with col_input:
+    st.markdown("### 🛠️ Ajuste de Precio")
+    nuevo_p = st.number_input("Introduce el Nuevo Precio:", value=p_actual - 4263.16, format="%.2f")
 
-# Cálculos Automáticos Basados en el Precio
-# 1. Nuevo Margen: (Precio - Costo) / Precio
-nuevo_mb_decimal = (nuevo_p - costo_unitario) / nuevo_p if nuevo_p > 0 else 0
-nuevo_mb_pct = nuevo_mb_decimal * 100
+# Cálculos Automáticos
+ganancia_unitaria_nueva = nuevo_p - costo_unitario
+nuevo_mb_pct = (ganancia_unitaria_nueva / nuevo_p) * 100 if nuevo_p > 0 else 0
 
-# 2. Unidades Necesarias: Utilidad Objetivo / (Nuevo Precio - Costo)
-ganancia_por_unidad = nuevo_p - costo_unitario
-if ganancia_por_unidad > 0:
-    q_necesaria = utilidad_bruta_objetivo / ganancia_por_unidad
+if ganancia_unitaria_nueva > 0:
+    q_necesaria = ub_objetivo / ganancia_unitaria_nueva
+    variacion_vol = ((q_necesaria / q_actual) - 1) * 100 if q_actual > 0 else 0
 else:
     q_necesaria = 0
+    variacion_vol = 0
 
-# Visualización de Resultados
-col1, col2, col3 = st.columns(3)
+with col_res:
+    res1, res2 = st.columns(2)
+    res1.metric("Nuevo Margen Bruto", f"{nuevo_mb_pct:.2f}%", f"{nuevo_mb_pct - mb_actual_pct:.2f}%")
+    res2.metric("Meta de Unidades", f"{int(q_necesaria):,}", f"{variacion_vol:.2f}% Vol.")
 
-with col1:
-    st.metric("Nuevo Margen Bruto", f"{nuevo_mb_pct:.2f}%", f"{nuevo_mb_pct - mb_actual_pct:.2f}%")
-
-with col2:
-    st.metric("Ventas Necesarias", f"{int(q_necesaria):,} un.")
-    esfuerzo = ((q_necesaria / q_actual) - 1) * 100 if q_actual > 0 else 0
-    st.write(f"**Esfuerzo extra:** {esfuerzo:.2f}% en volumen")
-
-with col3:
-    precio_var = ((nuevo_p / p_actual) - 1) * 100 if p_actual > 0 else 0
-    st.metric("Variación de Precio", f"{precio_var:.2f}%")
-
-# --- RESUMEN PARA PDF/IMPRESIÓN ---
+# --- GENERACIÓN DE REPORTE Y PDF ---
 st.divider()
-if st.button("Preparar Reporte para PDF"):
+if st.button("📄 Generar Reporte para PDF"):
     st.balloons()
+    
     st.markdown(f"""
-    ### 📝 Reporte de Estrategia Comercial
-    **Producto:** {nombre_producto}  
-    **Precio Anterior:** ${p_actual:,.2f}  | **Precio Nuevo:** ${nuevo_p:,.2f}  
-    **Margen Anterior:** {mb_actual_pct:.2f}% | **Margen Nuevo:** {nuevo_mb_pct:.2f}%  
+    <div class="report-box">
+        <h2>Reporte Gerencial de Elasticidad</h2>
+        <p><strong>Desarrollado por Jaime Loaiza</strong></p>
+        <hr>
+        <p><strong>Producto:</strong> {producto}</p>
+        <table style="width:100%">
+            <tr>
+                <td><strong>Precio Anterior:</strong> ${p_actual:,.2f}</td>
+                <td><strong>Precio Nuevo:</strong> ${nuevo_p:,.2f}</td>
+            </tr>
+            <tr>
+                <td><strong>Margen Anterior:</strong> {mb_actual_pct:.2f}%</td>
+                <td><strong>Margen Nuevo:</strong> {nuevo_mb_pct:.2f}%</td>
+            </tr>
+        </table>
+        <h3 style="color: #2e7d32;">Meta Obligatoria: {int(q_necesaria):,} unidades</h3>
+        <p>Para mantener la utilidad bruta de <strong>${ub_objetivo:,.2f}</strong>, se requiere un incremento del <strong>{variacion_vol:.2f}%</strong> en el volumen de ventas.</p>
+        <br>
+        <blockquote style="background-color: #fff3cd; padding: 15px; border-left: 5px solid #ffca28;">
+            <strong>⚠️ Consejo Gerencial:</strong><br>
+            Al mover precios y cantidades, el objetivo no debe ser solo "quedar igual", sino procurar producir una mayor cantidad de dinero para que el riesgo valga la pena. 
+            Tenga en cuenta que este modelo es de utilidad bruta; no considera factores externos como el incremento en costos logísticos, operativos o de almacenamiento que implica vender un mayor volumen.
+        </blockquote>
+    </div>
+    """, unsafe_allow_html=True)
     
-    ---
-    **CONCLUSIÓN:** Para mantener la utilidad bruta actual de **${utilidad_bruta_objetivo:,.2f}**, el equipo comercial 
-    debe lograr una venta mínima de **{int(q_necesaria):,} unidades**.
-    
-    *Costo unitario de referencia: ${costo_unitario:,.2f}*
-    """)
-    st.info("💡 Tip: Presiona 'Ctrl+P' para guardar este reporte como PDF.")
+    st.info("💡 **Instrucciones para PDF:** Ahora que el reporte aparece arriba, presiona **Ctrl + P** (o Cmd + P en Mac) y selecciona 'Guardar como PDF' en tu impresora.")
+
+# Pie de página fijo
+st.markdown('<div class="footer">Simulador de Punto de Indiferencia | Autor: Jaime Loaiza</div>', unsafe_allow_html=True)
