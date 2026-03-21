@@ -84,12 +84,6 @@ st.divider()
 if st.button("📄 Generar Reporte para PDF"):
     st.balloons()
     
-    # --- GENERACIÓN DE REPORTE Y PDF (CORREGIDO) ---
-st.divider()
-if st.button("📄 Generar Reporte para PDF"):
-    st.balloons()
-    
-    # Asegúrate de que todo este bloque esté dentro de st.markdown con unsafe_allow_html=True
     st.markdown(f"""
     <div class="report-box">
         <h2 style="margin-top:0; color: #1e1e1e; text-align: center;">Reporte Gerencial de Punto de Indiferencia</h2>
@@ -118,5 +112,6 @@ if st.button("📄 Generar Reporte para PDF"):
     """, unsafe_allow_html=True)
     
     st.info("💡 **Instrucciones para PDF:** Ahora que el reporte aparece arriba, presiona **Ctrl + P** (o Cmd + P en Mac) y selecciona 'Guardar como PDF'.")
+    
 # Pie de página fijo
 st.markdown(f'<div class="footer">Simulador de Punto de Indiferencia | Developed by Jaime Loaiza</div>', unsafe_allow_html=True)
