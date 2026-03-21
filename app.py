@@ -1,10 +1,11 @@
 import streamlit as st
 import pandas as pd
+import time
 
 # Configuración de la página
 st.set_page_config(page_title="Simulador de Punto de Indiferencia", layout="wide")
 
-# --- ESTILO BILINGÜE PROFESIONAL (NUEVO) ---
+# --- ESTILO BILINGÜE PROFESIONAL ---
 st.markdown("""
     <style>
     /* Estilo para los títulos gerenciales */
@@ -12,32 +13,27 @@ st.markdown("""
         font-size: 40px; 
         font-weight: 800; 
         color: #1E1E1E; 
-        margin-bottom: -10px; /* Pegar un poco el inglés */
+        margin-bottom: -10px; 
         line-height: 1.1;
     }
     .sub-title { 
         font-size: 24px; 
         font-weight: 300; 
-        color: #6C757D; /* Gris azulado elegante */
-        margin-bottom: 25px; /* Espacio antes del caption */
-        border-bottom: 1px solid #E0E0E0; /* Línea divisoria sutil */
+        color: #6C757D; 
+        margin-bottom: 25px; 
+        border-bottom: 1px solid #E0E0E0; 
         padding-bottom: 10px;
     }
     
-    /* Mantener tus estilos anteriores */
     .footer { position: fixed; bottom: 0; left: 0; width: 100%; text-align: center; color: gray; font-size: 12px; padding: 10px; background-color: white; border-top: 1px solid #eee; }
     .report-box { border: 2px solid #e6e9ef; padding: 25px; border-radius: 15px; background-color: #fcfcfc; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
     </style>
     """, unsafe_allow_html=True)
 
-# --- ENCABEZADO APLICADO ---
+# --- ENCABEZADO ---
 st.markdown('<p class="main-title">Simulador de Punto de Indiferencia</p>', unsafe_allow_html=True)
 st.markdown('<p class="sub-title">Sales Volume Break-even Simulator</p>', unsafe_allow_html=True)
-
-# Mantenemos tus créditos Gerenciales
 st.caption("Herramienta desarrollada por **Jaime Loaiza** para uso gerencial en ventas.")
-
-# ... (Aquí sigue el resto de tu código sin cambios) ...
 
 # 1. NOMBRE DEL PRODUCTO
 producto = st.text_input("Producto / Categoría a analizar:", value="Un producto cualquiera")
@@ -60,8 +56,7 @@ col_input, col_res = st.columns([1, 2])
 
 with col_input:
     st.markdown("### 🛠️ Ajuste de Precio")
-    # Valor por defecto sugerido con una pequeña baja
-    nuevo_p = st.number_input("Introduce el Nuevo Precio:", value=p_actual * 1.00, format="%.2f")
+    nuevo_p = st.number_input("Introduce el Nuevo Precio:", value=p_actual * 0.95, format="%.2f")
 
 # Cálculos Automáticos
 ganancia_unitaria_nueva = nuevo_p - costo_unitario
@@ -79,11 +74,18 @@ with col_res:
     res1.metric("Nuevo Margen Bruto", f"{nuevo_mb_pct:.2f}%", f"{nuevo_mb_pct - mb_actual_pct:.2f}%")
     res2.metric("Meta de Unidades", f"{int(q_necesaria):,}", f"{variacion_vol:.2f}% Vol.")
 
-# --- GENERACIÓN DE REPORTE Y PDF ---
+# --- GENERACIÓN DE REPORTE ---
 st.divider()
-if st.button("📄 Generar Reporte para PDF"):
-    st.balloons()
+if st.button("📄 Generar Reporte Gerencial de Punto de Indiferencia"):
     
+    # Efecto de trazado técnico
+    with st.status("Construyendo análisis de indiferencia...", expanded=True) as status:
+        st.write("📍 Trazando ejes de Precio y Volumen...")
+        time.sleep(0.5)
+        st.write("📈 Dibujando curva de rentabilidad...")
+        time.sleep(0.7)
+        status.update(label="¡Análisis completado!", state="complete", expanded=False)
+
     st.markdown(f"""
     <div class="report-box">
         <h2 style="margin-top:0; color: #1e1e1e; text-align: center;">Reporte Gerencial de Punto de Indiferencia</h2>
@@ -111,5 +113,7 @@ if st.button("📄 Generar Reporte para PDF"):
     </div>
     """, unsafe_allow_html=True)
     
+    st.info("💡 **Instrucciones para PDF:** Presiona Ctrl + P y selecciona 'Guardar como PDF'.")
+
 # Pie de página fijo
 st.markdown(f'<div class="footer">Simulador de Punto de Indiferencia | Developed by Jaime Loaiza</div>', unsafe_allow_html=True)
