@@ -4,27 +4,48 @@ import pandas as pd
 # Configuración de la página
 st.set_page_config(page_title="Simulador de Punto de Indiferencia", layout="wide")
 
-# Estilo para mejorar la visualización
+# --- ESTILO MEJORADO PARA QUE LOS TÍTULOS SOBRESALGAN ---
 st.markdown("""
     <style>
-    .footer { position: fixed; bottom: 0; width: 100%; text-align: center; color: gray; font-size: 12px; padding: 10px; }
-    .report-box { border: 1px solid #e6e9ef; padding: 20px; border-radius: 10px; background-color: #fafafa; }
+    /* Estilo para los títulos bilingües */
+    .main-title { 
+        font-size: 48px; 
+        font-weight: 800; 
+        color: #1E1E1E; 
+        margin-bottom: -15px;
+        line-height: 1.1;
+        letter-spacing: -1px;
+    }
+    .sub-title { 
+        font-size: 28px; 
+        font-weight: 600; 
+        color: #4A4A4A; 
+        margin-bottom: 20px;
+        border-bottom: 3px solid #2e7d32; /* Línea verde elegante */
+        padding-bottom: 10px;
+        display: inline-block;
+        width: 100%;
+    }
+    
+    /* Estilos generales */
+    .footer { position: fixed; bottom: 0; left: 0; width: 100%; text-align: center; color: gray; font-size: 12px; padding: 10px; background-color: white; border-top: 1px solid #eee; }
+    .report-box { border: 2px solid #e6e9ef; padding: 25px; border-radius: 15px; background-color: #fcfcfc; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
     </style>
     """, unsafe_allow_html=True)
 
-# Títulos con diseño
+# --- ENCABEZADO ---
 st.markdown('<p class="main-title">Simulador de Punto de Indiferencia</p>', unsafe_allow_html=True)
 st.markdown('<p class="sub-title">Sales Volume Break-even Simulator</p>', unsafe_allow_html=True)
 st.caption("Herramienta desarrollada por **Jaime Loaiza** para uso gerencial en ventas.")
 
 # 1. NOMBRE DEL PRODUCTO
-producto = st.text_input("Producto / Categoría a analizar:", value="un producto cualquiera")
+producto = st.text_input("Producto / Categoría a analizar:", value="Un producto cualquiera")
 
 st.divider()
 
 # --- DATOS BASE (BARRA LATERAL) ---
 st.sidebar.header("📝 Datos Base (Actuales)")
-p_actual = st.sidebar.number_input("Precio de Venta Actual", value=1.00, format="%.2f")
+p_actual = st.sidebar.number_input("Precio de Venta Actual", value=100.00, format="%.2f")
 q_actual = st.sidebar.number_input("Unidades Vendidas Actuales", value=1000)
 mb_actual_pct = st.sidebar.number_input("Margen Bruto Actual (%)", value=26.00, format="%.2f")
 
@@ -38,7 +59,8 @@ col_input, col_res = st.columns([1, 2])
 
 with col_input:
     st.markdown("### 🛠️ Ajuste de Precio")
-    nuevo_p = st.number_input("Introduce el Nuevo Precio:", value=p_actual - 1.00, format="%.2f")
+    # Valor por defecto sugerido con una pequeña baja
+    nuevo_p = st.number_input("Introduce el Nuevo Precio:", value=p_actual * 0.95, format="%.2f")
 
 # Cálculos Automáticos
 ganancia_unitaria_nueva = nuevo_p - costo_unitario
@@ -63,24 +85,24 @@ if st.button("📄 Generar Reporte para PDF"):
     
     st.markdown(f"""
     <div class="report-box">
-        <h2>Reporte Gerencial de Elasticidad</h2>
+        <h2 style="margin-top:0;">Reporte Gerencial de Elasticidad</h2>
         <p><strong>Desarrollado por Jaime Loaiza</strong></p>
         <hr>
         <p><strong>Producto:</strong> {producto}</p>
-        <table style="width:100%">
-            <tr>
-                <td><strong>Precio Anterior:</strong> ${p_actual:,.2f}</td>
-                <td><strong>Precio Nuevo:</strong> ${nuevo_p:,.2f}</td>
+        <table style="width:100%; border-collapse: collapse;">
+            <tr style="background-color: #f2f2f2;">
+                <td style="padding:10px;"><strong>Precio Anterior:</strong> ${p_actual:,.2f}</td>
+                <td style="padding:10px;"><strong>Precio Nuevo:</strong> ${nuevo_p:,.2f}</td>
             </tr>
             <tr>
-                <td><strong>Margen Anterior:</strong> {mb_actual_pct:.2f}%</td>
-                <td><strong>Margen Nuevo:</strong> {nuevo_mb_pct:.2f}%</td>
+                <td style="padding:10px;"><strong>Margen Anterior:</strong> {mb_actual_pct:.2f}%</td>
+                <td style="padding:10px;"><strong>Margen Nuevo:</strong> {nuevo_mb_pct:.2f}%</td>
             </tr>
         </table>
-        <h3 style="color: #2e7d32;">Meta Obligatoria: {int(q_necesaria):,} unidades</h3>
+        <h3 style="color: #2e7d32; margin-bottom: 5px;">Meta Obligatoria: {int(q_necesaria):,} unidades</h3>
         <p>Para mantener la utilidad bruta de <strong>${ub_objetivo:,.2f}</strong>, se requiere un incremento del <strong>{variacion_vol:.2f}%</strong> en el volumen de ventas.</p>
         <br>
-        <blockquote style="background-color: #fff3cd; padding: 15px; border-left: 5px solid #ffca28;">
+        <blockquote style="background-color: #fff3cd; padding: 15px; border-left: 5px solid #ffca28; margin: 0;">
             <strong>⚠️ Consejo Gerencial:</strong><br>
             Al mover precios y cantidades, el objetivo no debe ser solo "quedar igual", sino procurar producir una mayor cantidad de dinero para que el riesgo valga la pena. 
             Tenga en cuenta que este modelo es de utilidad bruta; no considera factores externos como el incremento en costos logísticos, operativos o de almacenamiento que implica vender un mayor volumen.
@@ -88,7 +110,7 @@ if st.button("📄 Generar Reporte para PDF"):
     </div>
     """, unsafe_allow_html=True)
     
-    st.info("💡 **Instrucciones para PDF:** Ahora que el reporte aparece arriba, presiona **Ctrl + P** (o Cmd + P en Mac) y selecciona 'Guardar como PDF' en tu impresora.")
+    st.info("💡 **Instrucciones para PDF:** Presiona **Ctrl + P** (o Cmd + P en Mac) y selecciona 'Guardar como PDF'.")
 
 # Pie de página fijo
-st.markdown('<div class="footer">Simulador de Punto de Indiferencia | Autor: Jaime Loaiza</div>', unsafe_allow_html=True)
+st.markdown(f'<div class="footer">Simulador de Punto de Indiferencia | Developed by Jaime Loaiza</div>', unsafe_allow_html=True)
