@@ -12,8 +12,9 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- ENCABEZADO Y CRÉDITOS ---
-st.title("📊 Simulador de Punto de Indiferencia de Ventas")
+# Títulos con diseño
+st.markdown('<p class="main-title">Simulador de Punto de Indiferencia</p>', unsafe_allow_html=True)
+st.markdown('<p class="sub-title">Sales Volume Break-even Simulator</p>', unsafe_allow_html=True)
 st.caption("Herramienta desarrollada por **Jaime Loaiza** para uso gerencial en ventas.")
 
 # 1. NOMBRE DEL PRODUCTO
