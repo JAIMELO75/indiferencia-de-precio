@@ -91,9 +91,9 @@ if st.button("📄 Generar Reporte para PDF"):
         <hr>
         <p style="font-size: 19px; line-height: 1.6; text-align: justify;">
             Para mantener la <b>utilidad bruta</b> que arrojan las unidades actuales a precios actuales, la cual es de 
-            <span style="color: #2e7d32; font-weight: bold;">${ub_objetivo:,.2f}</span>, 
+            <span style="color: #2e7d32; font-weight: bold;">\${ub_objetivo:,.2f}</span>, 
             usted debe vender un total de <span style="color: #2e7d32; font-weight: bold;">{int(q_necesaria):,} unidades</span> 
-            con el fin de que la decisión de ajustar el precio a <b>${nuevo_p:,.2f}</b> sea <b>indiferente</b> para la rentabilidad de la compañía; 
+            con el fin de que la decisión de ajustar el precio a <b>\${nuevo_p:,.2f}</b> sea <b>indiferente</b> para la rentabilidad de la compañía; 
             es decir, que a pesar del cambio en el precio, el beneficio económico final en dinero permanezca inalterado.
         </p>
         
@@ -110,8 +110,6 @@ if st.button("📄 Generar Reporte para PDF"):
         </blockquote>
     </div>
     """, unsafe_allow_html=True)
-    
-    st.info("💡 **Instrucciones para PDF:** Ahora que el reporte aparece arriba, presiona **Ctrl + P** (o Cmd + P en Mac) y selecciona 'Guardar como PDF'.")
     
 # Pie de página fijo
 st.markdown(f'<div class="footer">Simulador de Punto de Indiferencia | Developed by Jaime Loaiza</div>', unsafe_allow_html=True)
