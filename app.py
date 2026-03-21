@@ -4,39 +4,40 @@ import pandas as pd
 # Configuración de la página
 st.set_page_config(page_title="Simulador de Punto de Indiferencia", layout="wide")
 
-# --- ESTILO MEJORADO PARA QUE LOS TÍTULOS SOBRESALGAN ---
+# --- ESTILO BILINGÜE PROFESIONAL (NUEVO) ---
 st.markdown("""
     <style>
-    /* Estilo para los títulos bilingües */
+    /* Estilo para los títulos gerenciales */
     .main-title { 
-        font-size: 48px; 
+        font-size: 40px; 
         font-weight: 800; 
         color: #1E1E1E; 
-        margin-bottom: -15px;
+        margin-bottom: -10px; /* Pegar un poco el inglés */
         line-height: 1.1;
-        letter-spacing: -1px;
     }
     .sub-title { 
-        font-size: 28px; 
-        font-weight: 600; 
-        color: #4A4A4A; 
-        margin-bottom: 20px;
-        border-bottom: 3px solid #2e7d32; /* Línea verde elegante */
+        font-size: 24px; 
+        font-weight: 300; 
+        color: #6C757D; /* Gris azulado elegante */
+        margin-bottom: 25px; /* Espacio antes del caption */
+        border-bottom: 1px solid #E0E0E0; /* Línea divisoria sutil */
         padding-bottom: 10px;
-        display: inline-block;
-        width: 100%;
     }
     
-    /* Estilos generales */
+    /* Mantener tus estilos anteriores */
     .footer { position: fixed; bottom: 0; left: 0; width: 100%; text-align: center; color: gray; font-size: 12px; padding: 10px; background-color: white; border-top: 1px solid #eee; }
     .report-box { border: 2px solid #e6e9ef; padding: 25px; border-radius: 15px; background-color: #fcfcfc; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
     </style>
     """, unsafe_allow_html=True)
 
-# --- ENCABEZADO ---
+# --- ENCABEZADO APLICADO ---
 st.markdown('<p class="main-title">Simulador de Punto de Indiferencia</p>', unsafe_allow_html=True)
 st.markdown('<p class="sub-title">Sales Volume Break-even Simulator</p>', unsafe_allow_html=True)
+
+# Mantenemos tus créditos Gerenciales
 st.caption("Herramienta desarrollada por **Jaime Loaiza** para uso gerencial en ventas.")
+
+# ... (Aquí sigue el resto de tu código sin cambios) ...
 
 # 1. NOMBRE DEL PRODUCTO
 producto = st.text_input("Producto / Categoría a analizar:", value="Un producto cualquiera")
