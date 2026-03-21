@@ -1,3 +1,4 @@
+import streamlit.components.v1 as components
 import streamlit as st
 import time
 import textwrap
@@ -143,8 +144,7 @@ if st.button("📄 Generar Reporte Gerencial de Punto de Indiferencia"):
             </div>
         </div>
         """)
-
-        st.markdown(reporte_html, unsafe_allow_html=True)
+components.html(reporte_html, height=600, scrolling=True)
         st.info("💡 **Instrucciones:** Presiona Ctrl + P y guarda como PDF.")
 
 # --- PIE DE PÁGINA ---
