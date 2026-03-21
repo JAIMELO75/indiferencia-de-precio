@@ -37,7 +37,7 @@ col_input, col_res = st.columns([1, 2])
 
 with col_input:
     st.markdown("### 🛠️ Ajuste de Precio")
-    nuevo_p = st.number_input("Introduce el Nuevo Precio:", value=p_actual - 4263.16, format="%.2f")
+    nuevo_p = st.number_input("Introduce el Nuevo Precio:", value=p_actual - 0.90, format="%.2f")
 
 # Cálculos Automáticos
 ganancia_unitaria_nueva = nuevo_p - costo_unitario
