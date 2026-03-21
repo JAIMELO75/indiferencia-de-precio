@@ -23,8 +23,8 @@ st.divider()
 
 # --- DATOS BASE (BARRA LATERAL) ---
 st.sidebar.header("📝 Datos Base (Actuales)")
-p_actual = st.sidebar.number_input("Precio de Venta Actual", value=162000.00, format="%.2f")
-q_actual = st.sidebar.number_input("Unidades Vendidas Actuales", value=69000)
+p_actual = st.sidebar.number_input("Precio de Venta Actual", value=1.00, format="%.2f")
+q_actual = st.sidebar.number_input("Unidades Vendidas Actuales", value=1000)
 mb_actual_pct = st.sidebar.number_input("Margen Bruto Actual (%)", value=26.00, format="%.2f")
 
 # Cálculos Base Internos
