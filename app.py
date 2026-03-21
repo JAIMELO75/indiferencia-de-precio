@@ -86,24 +86,24 @@ if st.button("📄 Generar Reporte para PDF"):
     
     st.markdown(f"""
     <div class="report-box">
-        <h2 style="margin-top:0;">Reporte Gerencial de Elasticidad</h2>
-        <p><strong>Desarrollado por Jaime Loaiza</strong></p>
+        <h2 style="margin-top:0; color: #1e1e1e; text-align: center;">Reporte Gerencial de Punto de Indiferencia</h2>
+        <p style="text-align: center;"><strong>Desarrollado por Jaime Loaiza</strong></p>
         <hr>
-        <p><strong>Producto:</strong> {producto}</p>
-        <table style="width:100%; border-collapse: collapse;">
-            <tr style="background-color: #f2f2f2;">
-                <td style="padding:10px;"><strong>Precio Anterior:</strong> ${p_actual:,.2f}</td>
-                <td style="padding:10px;"><strong>Precio Nuevo:</strong> ${nuevo_p:,.2f}</td>
-            </tr>
-            <tr>
-                <td style="padding:10px;"><strong>Margen Anterior:</strong> {mb_actual_pct:.2f}%</td>
-                <td style="padding:10px;"><strong>Margen Nuevo:</strong> {nuevo_mb_pct:.2f}%</td>
-            </tr>
-        </table>
-        <h3 style="color: #2e7d32; margin-bottom: 5px;">Meta Obligatoria: {int(q_necesaria):,} unidades</h3>
-        <p>Para mantener la utilidad bruta de <strong>${ub_objetivo:,.2f}</strong>, se requiere un incremento del <strong>{variacion_vol:.2f}%</strong> en el volumen de ventas.</p>
+        <p style="font-size: 19px; line-height: 1.6; text-align: justify;">
+            Para mantener la <b>utilidad bruta</b> que arrojan las unidades actuales a precios actuales, la cual es de 
+            <span style="color: #2e7d32; font-weight: bold;">${ub_objetivo:,.2f}</span>, 
+            usted debe vender un total de <span style="color: #2e7d32; font-weight: bold;">{int(q_necesaria):,} unidades</span> 
+            con el fin de que la decisión de ajustar el precio a <b>${nuevo_p:,.2f}</b> sea <b>indiferente</b> para la rentabilidad de la compañía; 
+            es decir, que a pesar del cambio en el precio, el beneficio económico final en dinero permanezca inalterado.
+        </p>
+        
+        <p style="font-size: 19px; background-color: #e8f5e9; padding: 15px; border-radius: 8px; font-weight: 500;">
+            Lograr este objetivo requiere un incremento del <b>{variacion_vol:.2f}%</b> en el volumen de ventas. 
+            Cualquier cifra por debajo de este cumplimiento resultará en una pérdida de valor frente al escenario base.
+        </p>
+        
         <br>
-        <blockquote style="background-color: #fff3cd; padding: 15px; border-left: 5px solid #ffca28; margin: 0;">
+        <blockquote style="background-color: #fff3cd; padding: 20px; border-left: 6px solid #ffca28; margin: 0;">
             <strong>⚠️ Consejo Gerencial:</strong><br>
             Al mover precios y cantidades, el objetivo no debe ser solo "quedar igual", sino procurar producir una mayor cantidad de dinero para que el riesgo valga la pena. 
             Tenga en cuenta que este modelo es de utilidad bruta; no considera factores externos como el incremento en costos logísticos, operativos o de almacenamiento que implica vender un mayor volumen.
