@@ -45,7 +45,7 @@ st.divider()
 
 # --- DATOS BASE (BARRA LATERAL) ---
 st.sidebar.header("📝 Datos Base (Actuales)")
-p_actual = st.sidebar.number_input("Precio de Venta Actual", value=100.00, format="%.2f")
+p_actual = st.sidebar.number_input("Precio de Venta Actual", value=10.00, format="%.2f")
 q_actual = st.sidebar.number_input("Unidades Vendidas Actuales", value=1000)
 mb_actual_pct = st.sidebar.number_input("Margen Bruto Actual (%)", value=26.00, format="%.2f")
 
@@ -60,7 +60,7 @@ col_input, col_res = st.columns([1, 2])
 with col_input:
     st.markdown("### 🛠️ Ajuste de Precio")
     # Valor por defecto sugerido con una pequeña baja
-    nuevo_p = st.number_input("Introduce el Nuevo Precio:", value=p_actual * 0.95, format="%.2f")
+    nuevo_p = st.number_input("Introduce el Nuevo Precio:", value=p_actual * 1.00, format="%.2f")
 
 # Cálculos Automáticos
 ganancia_unitaria_nueva = nuevo_p - costo_unitario
