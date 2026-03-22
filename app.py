@@ -163,7 +163,7 @@ def build_pdf(producto, p_actual, q_actual, mb_actual_pct, nuevo_p, costo_unitar
     elements = []
 
     elements.append(Paragraph("Reporte Gerencial de Punto de Indiferencia", title_style))
-    elements.append(Paragraph("Desarrollado por Jaime Loaiza", subtitle_style))
+    elements.append(Paragraph("Desarrollado para decisiones comerciales de crecimiento", subtitle_style))
     elements.append(Spacer(1, 8))
 
     resumen = f"""
@@ -272,11 +272,11 @@ st.markdown('<div class="step-box"><b>Paso 1.</b> Ingresa los datos actuales del
 col1, col2 = st.columns(2)
 
 with col1:
-    producto = st.text_input("Producto o categoría", value="Zapapicos")
+    producto = st.text_input("Producto o categoría", value="cualquier producto")
     p_actual = st.number_input(
         "Precio de venta actual",
         min_value=0.0,
-        value=162000.00,
+        value=10.00,
         format="%.2f",
         help="Es el precio actual al que hoy vendes el producto."
     )
@@ -285,7 +285,7 @@ with col2:
     q_actual = st.number_input(
         "Unidades vendidas actuales",
         min_value=1,
-        value=69000,
+        value=1000,
         step=1,
         help="Cantidad actual vendida en el período que estás analizando."
     )
@@ -306,7 +306,7 @@ st.markdown('<div class="step-box"><b>Paso 2.</b> Escribe el nuevo precio que qu
 nuevo_p = st.number_input(
     "Nuevo precio propuesto",
     min_value=0.0,
-    value=round(p_actual * 0.95, 2),
+    value=round(p_actual * 0.98, 2),
     format="%.2f",
     help="La plataforma calculará automáticamente cuántas unidades debes vender para conservar la misma utilidad bruta."
 )
@@ -338,42 +338,57 @@ m3.metric("Meta de unidades", fmt_units(q_necesaria), f"{variacion_vol:.2f}% Vol
 # -----------------------------------
 # DIAGNÓSTICO COMERCIAL
 # -----------------------------------
-if nuevo_p > costo_unitario:
-
-    if variacion_vol <= 5:
-        st.success("🟢 Decisión altamente viable: el crecimiento requerido es bajo y manejable comercialmente.")
-
-    elif variacion_vol <= 15:
-        st.warning("🟡 Decisión viable con gestión: se requiere un esfuerzo comercial relevante para sostener la rentabilidad.")
-
-    else:
-        st.error("🔴 Decisión de alto riesgo: el crecimiento requerido es muy alto y puede no ser sostenible.")
+# -----------------------------------
+# DIAGNÓSTICO ESTRATÉGICO
+# -----------------------------------
 
 if nuevo_p <= costo_unitario:
-    st.error(
-        "El nuevo precio es igual o inferior al costo unitario estimado. "
-        "Así no existe punto de indiferencia rentable, porque cada unidad deja utilidad bruta cero o negativa."
+    st.error("🔴 Zona de destrucción inmediata: el precio es igual o inferior al costo. No existe rentabilidad posible.")
+else:
+
+    if variacion_vol <= 6:
+        st.success("🟢 Zona óptima: el crecimiento requerido es orgánico y absorbible sin esfuerzo adicional.")
+
+    elif variacion_vol <= 12:
+        st.warning("🟡 Zona de gestión: se requiere esfuerzo comercial moderado. Seguimiento quincenal recomendado.")
+
+    elif variacion_vol <= 18:
+        st.warning("🟠 Zona exigente: se requieren palancas comerciales adicionales para sostener la rentabilidad.")
+
+    else:
+        st.error("🔴 Zona estructural: el crecimiento requerido exige cambios profundos en el modelo de negocio.")
     )
 
 generar = st.button("📄 Generar reporte gerencial", use_container_width=True)
 
 if generar:
-    with st.status("Construyendo reporte...", expanded=True) as status:
-        st.write("Calculando punto de indiferencia...")
-        time.sleep(0.5)
-        st.write("Preparando resumen ejecutivo...")
-        time.sleep(0.6)
-        st.write("Generando versión descargable...")
-        time.sleep(0.6)
-        status.update(label="Reporte listo", state="complete", expanded=False)
 
-    if nuevo_p <= costo_unitario:
-        st.warning("No se puede generar un reporte válido porque el nuevo precio no deja utilidad bruta positiva.")
+    # -----------------------------------
+    # CONCLUSIÓN EJECUTIVA
+    # -----------------------------------
+
+    if variacion_vol <= 6:
+        conclusion = "La decisión se encuentra en zona óptima y puede ejecutarse con bajo riesgo."
+    elif variacion_vol <= 12:
+        conclusion = "La decisión es viable, pero requiere gestión comercial constante y seguimiento quincenal."
+    elif variacion_vol <= 18:
+        conclusion = "La decisión implica presión relevante y exige palancas comerciales adicionales."
     else:
-        st.markdown('<div class="report-box">', unsafe_allow_html=True)
-        st.markdown("## Reporte Gerencial de Punto de Indiferencia")
-        st.markdown("**Desarrollado por Jaime Loaiza**")
-        st.divider()
+        conclusion = "La decisión es estructural y debe evaluarse estratégicamente antes de ejecutarse."
+
+    st.markdown(f"""
+    <div style="
+    background:#F1F3F5;
+    padding:16px;
+    border-radius:10px;
+    border:1px solid #DEE2E6;
+    ">
+    <b>Conclusión ejecutiva:</b><br><br>
+    {conclusion}
+    <br><br>
+    <b>Advertencia:</b> Si no se alcanza el punto de indiferencia, la decisión entra en zona de destrucción de valor.
+    </div>
+    """, unsafe_allow_html=True)
 
         st.write(
             f"""
