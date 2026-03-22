@@ -16,6 +16,23 @@ st.set_page_config(
     page_icon="📈",
     layout="wide"
 )
+st.markdown("""
+<style>
+/* Oculta menú hamburguesa */
+#MainMenu {visibility: hidden;}
+
+/* Oculta footer */
+footer {visibility: hidden;}
+
+/* Oculta header (barra superior) */
+header {visibility: hidden;}
+
+/* Ajusta padding superior */
+.block-container {
+    padding-top: 3rem;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # -------------------------------------------------
 # ESTILOS
