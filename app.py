@@ -163,7 +163,7 @@ def build_pdf(producto, p_actual, q_actual, mb_actual_pct, nuevo_p, costo_unitar
     elements = []
 
     elements.append(Paragraph("Reporte Gerencial de Punto de Indiferencia", title_style))
-    elements.append(Paragraph("Desarrollado por Jaime Loaiza", subtitle_style))
+    elements.append(Paragraph("Desarrollado para crecimiento", subtitle_style))
     elements.append(Spacer(1, 8))
 
     resumen = f"""
@@ -272,11 +272,11 @@ st.markdown('<div class="step-box"><b>Paso 1.</b> Ingresa los datos actuales del
 col1, col2 = st.columns(2)
 
 with col1:
-    producto = st.text_input("Producto o categoría", value="Zapapicos")
+    producto = st.text_input("Producto o categoría", value="cualquier producto")
     p_actual = st.number_input(
         "Precio de venta actual",
         min_value=0.0,
-        value=162000.00,
+        value=10.00,
         format="%.2f",
         help="Es el precio actual al que hoy vendes el producto."
     )
@@ -285,7 +285,7 @@ with col2:
     q_actual = st.number_input(
         "Unidades vendidas actuales",
         min_value=1,
-        value=69000,
+        value=3000
         step=1,
         help="Cantidad actual vendida en el período que estás analizando."
     )
