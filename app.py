@@ -23,9 +23,17 @@ st.set_page_config(
 st.markdown("""
 <style>
 .block-container {
-    padding-top: 1.2rem;
+    padding-top: 4.5rem;
     padding-bottom: 4rem;
     max-width: 980px;
+}
+@media (max-width: 768px) {
+    .block-container {
+        padding-top: 6rem;
+        padding-bottom: 2rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 }
 
 .main-title {
