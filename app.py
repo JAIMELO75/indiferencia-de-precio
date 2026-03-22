@@ -285,7 +285,7 @@ with col2:
     q_actual = st.number_input(
         "Unidades vendidas actuales",
         min_value=1,
-        value=3000
+        value=3000,
         step=1,
         help="Cantidad actual vendida en el período que estás analizando."
     )
