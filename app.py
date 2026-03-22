@@ -335,6 +335,19 @@ m1, m2, m3 = st.columns(3)
 m1.metric("Costo unitario estimado", fmt_money(costo_unitario))
 m2.metric("Nuevo margen bruto", f"{nuevo_mb_pct:.2f}%", f"{nuevo_mb_pct - mb_actual_pct:.2f}%")
 m3.metric("Meta de unidades", fmt_units(q_necesaria), f"{variacion_vol:.2f}% Vol.")
+# -----------------------------------
+# DIAGNÓSTICO COMERCIAL
+# -----------------------------------
+if nuevo_p > costo_unitario:
+
+    if variacion_vol <= 5:
+        st.success("🟢 Decisión altamente viable: el crecimiento requerido es bajo y manejable comercialmente.")
+
+    elif variacion_vol <= 15:
+        st.warning("🟡 Decisión viable con gestión: se requiere un esfuerzo comercial relevante para sostener la rentabilidad.")
+
+    else:
+        st.error("🔴 Decisión de alto riesgo: el crecimiento requerido es muy alto y puede no ser sostenible.")
 
 if nuevo_p <= costo_unitario:
     st.error(
