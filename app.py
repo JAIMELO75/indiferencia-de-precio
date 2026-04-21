@@ -465,4 +465,4 @@ Tenga en cuenta que este modelo es de utilidad bruta; no considera factores exte
             use_container_width=True
         )
 
-st.markdown('<div class="footer-note">Simulador de Punto de Indiferencia | Developed by Jaime Loaiza</div>', unsafe_allow_html=True)
+st.markdown('<div class="footer-note">Simulador de Punto de Indiferencia | Developed by Jaime Loaiza G</div>', unsafe_allow_html=True)
